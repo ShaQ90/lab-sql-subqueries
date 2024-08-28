@@ -22,7 +22,6 @@ WHERE a.actor_id in (
 -- Bonus:
 -- 4. Sales have been lagging among young families, and you want to target family movies for a promotion. Identify all movies categorized as family films.
 
-SELECT * FROM category;
 
 SELECT f.title as title FROM sakila.film as f
 WHERE f.film_id in (
@@ -50,7 +49,7 @@ ON c.address_id = a.address_id
 JOIN sakila.city as ci
 ON a.city_id = ci.city_id
 JOIN sakila.country as co
-ON ci.city_id = co.country_id 
+ON ci.country_id = co.country_id 
 WHERE co.country = "Canada";
 
 
@@ -60,7 +59,7 @@ SELECT f.title FROM sakila.film as f
 JOIN sakila.film_actor as fa
 ON f.film_id = fa.film_id
 WHERE fa.actor_id = (
-	SELECT COUNT(*) FROM sakila.film_actor as fa
+	SELECT fa.actor_id, count(fa.film_id) FROM sakila.film_actor as fa
 	GROUP BY fa.actor_id
 	ORDER BY fa.actor_id DESC
 	LIMIT 1
